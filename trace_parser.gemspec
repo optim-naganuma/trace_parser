@@ -1,24 +1,26 @@
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'trace_parser/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = "trace_parser"
-  spec.version       = TraceParser::VERSION
-  spec.authors       = ["naganuma"]
-  spec.email         = ["naganuma@optim.co.jp"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+require 'trace_parser.rb'
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+git_sha1 = `git rev-parse --verify HEAD`.strip
 
-  spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
+Gem::Specification.new do |s|
+  s.name        = 'trace_parser'
+  s.version     = TraceParser::VERSION
+  s.date        = Time.now.strftime("%Y-%m-%d")
+  s.summary     = "TraceParser"
+  s.description = "git sha1: #{git_sha1}"
+  s.authors     = ["Shunsuke Naganuma"]
+  s.email       = "a70258798@fluky.info"
+  s.description = "Immutable Linked List implemented in C-Extensions"
+  s.files       = `git ls-files`.split($/)
+  s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.extensions  = %w[ext/trace_parser/extconf.rb]
+  s.homepage    = 'http://rubygems.org/gems/'
+  s.license     = 'MIT'
+  s.require_paths = ["lib"]
 end
+
