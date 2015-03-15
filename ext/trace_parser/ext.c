@@ -23,12 +23,14 @@ static long lSzFilter = 0;
 
 static VALUE rb_callback_function(int argc, VALUE *argv, VALUE self)
 {
+	double tv_diff;
+	
 	if (!fp) return Qnil;
 	if (argc != 6) return Qnil;
 
 	if (pcFilter && strncmp(pcFilter, RSTRING_PTR(argv[1]), lSzFilter) == 0 ) return Qnil;
 
-	double tv_diff = (double)(clock() - tv) / CLOCKS_PER_SEC;
+	tv_diff = (double)(clock() - tv) / (double)(CLOCKS_PER_SEC);
 
 	fprintf(fp, "%5.6f\t", tv_diff);
 	fprintf(fp, "%s\t", RSTRING_PTR(argv[1]));  	// 1:[String]  file
